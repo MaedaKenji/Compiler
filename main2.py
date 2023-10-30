@@ -45,6 +45,9 @@ while line_number < len(lines):
     # Increment
     if '+=' in line:
         var, value = line.split('+=')
+        if var.strip() not in variables:
+            print(f"Variable '{var.strip()}' not found. Exiting the program.")
+            break
         variables[var.strip()] += int(value.strip())
         line_number += 1
         continue
