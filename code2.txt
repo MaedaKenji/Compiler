@@ -1,0 +1,11 @@
+a = 1
+b = 1
+
+ulang1:
+    print(a)
+    print(b)
+    a += 1
+    b += a + 1
+    if a < 10:
+        goto ulang1
+exit()
