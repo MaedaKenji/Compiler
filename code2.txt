@@ -1,5 +1,5 @@
 a = 1
-b = 1
+b = 2
 
 ulang1:
     print(a)
@@ -8,4 +8,18 @@ ulang1:
     b += a + 1
     if a < 10:
         goto ulang1
+
+a = 0
+while a<10:
+    print("Ini While loop")
+    a+=1
+    print(a)
+    if a > 10:
+        break
+
+for i in range(10):
+    print("Ini For loop")
+    print(i)
+    if i > 10:
+        break
 exit()
