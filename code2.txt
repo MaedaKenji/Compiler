@@ -22,4 +22,9 @@ for i in range(10):
     print(i)
     if i > 10:
         break
+
+func printt(a):
+    print(a) # Ini comment
+
+printt(200)
 exit()
