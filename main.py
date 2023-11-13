@@ -1,4 +1,5 @@
 import re
+from kelas import *
 from func import *
 
 # Defining variables / declaring variables
@@ -7,6 +8,7 @@ function_variables = {}
 for_dict = {}
 temp_variables = {}
 function_names = []
+lists = []
 is_function = 0 # Variables = func variables
 is_first_func = True
 is_first_for = True
@@ -35,7 +37,7 @@ for i, line in enumerate(lines):
 while line_number < len(lines):
     line = lines[line_number].strip()  # Line starts from index 0
     # Debugging purpose
-    if line_number == 26:
+    if line_number == 3:
         pass
     # End
 
@@ -159,9 +161,21 @@ while line_number < len(lines):
 
         line_number += 1
         continue
-
+    
     # Assign
     if '=' in line:
+        # Check if assign is lists
+        if '[' in line and ']' in line:
+            name = line.split('=')[0].strip()
+            value = line.split('=')[1].strip()
+            value = value.replace('[', '').replace(']', '').split(',')
+            lists.append({'name': name, 'value': value})
+            line_number += 1
+            continue
+        
+            
+            
+        
         var, value = line.split('=')
         variables[var.strip()] = int(value.strip())
         line_number += 1
@@ -190,9 +204,28 @@ while line_number < len(lines):
                 print(variables[var])
                 line_number += 1
                 continue
-            else:
-                print("Invalid syntax. Exiting the program.")
-                break
+            # Check if print is lists
+            name = line.split('print')[1].strip()
+            name = line.split('(')[1].split(')')[0].split('[')[0].strip()
+            a = {'name': name, 'value': "1,2,3,4,5"}
+            if 1 < 2: # To help with continue to next line
+                for i in range(len(lists)):
+                    if name in lists[i]['name']:
+                        # Check if print is lists with index
+                        if '[' in line and ']' in line:
+                            index = line.split('[')[1].split(']')[0].strip()
+                            index = int(index)
+                            print(lists[i]['value'][index])
+                            line_number += 1
+                            break
+                        else:
+                            print(lists[i]['value'])
+                            line_number += 1
+                            break
+                continue
+            print("Invalid syntax. Exiting the program.")
+            break
+            
         
         
 
@@ -340,7 +373,7 @@ while line_number < len(lines):
             function_names[-1]['end_line'] = end_line_number
             
             
-            print(function_names)
+            # print(function_names)
             continue
         # else:
         #     line_number += 1
