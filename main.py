@@ -184,7 +184,7 @@ while line_number < len(lines):
     # Print
     if line.startswith('print'):
         # Check if print is only 'print'
-        if line[5] == '(':
+        if line[5] == '(' or line[4] == ' ':
             var = line.split('print')[1].strip()
             var = line.split('(')[1].split(')')[0].strip()
 
@@ -197,7 +197,7 @@ while line_number < len(lines):
                 line_number += 1
                 continue
             elif line[6].isdigit():
-                print(line[5:])
+                print(line[6:-1])
                 line_number += 1
                 continue
             elif var in variables:
@@ -225,7 +225,8 @@ while line_number < len(lines):
                 continue
             print("Invalid syntax. Exiting the program.")
             break
-            
+           
+        
         
         
 

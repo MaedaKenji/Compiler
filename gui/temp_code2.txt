@@ -1,0 +1,38 @@
+# Create a frame to hold the line numbers and code editor widgets
+frame = tk.Frame(root)
+frame.pack(fill=tk.BOTH, expand=True)
+
+# Create a scrollbar for the code editor
+code_editor_scrollbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL)
+code_editor_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+
+# Create the code editor text widget
+code_editor = tk.Text(frame, font=("Courier New", 12), bg="#121212", fg="white",
+                      xscrollcommand=code_editor_scrollbar.set)
+code_editor.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+# Configure the scrollbar to scroll the code editor widget
+code_editor_scrollbar.config(command=code_editor.xview)
+code_editor_scrollbar.bind("<Button-4>", lambda e: code_editor.xview_scroll(-1, tk.UNITS))
+code_editor_scrollbar.bind("<Button-5>", lambda e: code_editor.xview_scroll(1, tk.UNITS))
+
+# Bind the code editor scroll event to synchronize with line numbers
+code_editor_scrollbar.bind("<B1-Motion>", on_code_editor_scroll)
+code_editor_scrollbar.bind("<ButtonRelease-1>", on_code_editor_scroll)
+
+# Create a line numbers text widget
+line_numbers = tk.Text(frame, width=4, padx=4, pady=4,
+                       bg="#272822", fg="#75715E", state='disabled')
+line_numbers.pack(side=tk.RIGHT, fill=tk.Y)
+
+# Insert initial line number
+line_numbers.insert(tk.END, '1\n')
+
+# Synchronize the scrolling of the code editor and line numbers
+code_editor['xscrollcommand'] = on_code_editor_scroll
+
+# Bind the <<Modified>> event to the update_line_numbers function
+code_editor.bind("<<Modified>>", update_line_numbers)
+
+# Start the Tkinter event loop
+root.mainloop()
